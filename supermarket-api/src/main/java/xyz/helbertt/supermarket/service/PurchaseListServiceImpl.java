@@ -18,7 +18,7 @@ public class PurchaseListServiceImpl implements PurchaseListService {
 	
 	@Autowired
 	public PurchaseListServiceImpl(PurchaseListRepository listRepository) {
-		super();
+		
 		this.listRepository = listRepository;
 	}
 	
