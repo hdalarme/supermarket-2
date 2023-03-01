@@ -1,4 +1,4 @@
-package xyz.helbertt.supermarket.dto;
+package xyz.helbertt.supermarket.dto.request;
 
 import lombok.Data;
 

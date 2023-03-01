@@ -10,18 +10,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.AllArgsConstructor;
-import xyz.helbertt.supermarket.dto.PurchaseListDTO;
+import xyz.helbertt.supermarket.dto.request.PurchaseListDTO;
 import xyz.helbertt.supermarket.service.PurchaseListService;
 
 @RestController
 @RequestMapping("/api/v1/list")
-@AllArgsConstructor //(onConstructor = @__(@Autowired))
+@AllArgsConstructor (onConstructor = @__(@Autowired))
 public class PurchaseListController {
 
-	@Autowired
 	private ModelMapper modelmapper;
 	
-	@Autowired
 	private PurchaseListService listService;
 	
 	@GetMapping

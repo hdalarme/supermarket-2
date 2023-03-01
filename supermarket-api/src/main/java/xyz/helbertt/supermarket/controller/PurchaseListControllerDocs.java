@@ -5,8 +5,8 @@ import java.util.List;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponses;
+import xyz.helbertt.supermarket.dto.request.PurchaseListDTO;
 import io.swagger.annotations.ApiResponse;
-import xyz.helbertt.supermarket.dto.PurchaseListDTO;
 
 @Api("Manages Lists")
 public interface PurchaseListControllerDocs {

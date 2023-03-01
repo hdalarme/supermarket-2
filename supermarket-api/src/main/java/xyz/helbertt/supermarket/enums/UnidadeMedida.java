@@ -12,13 +12,6 @@ public enum UnidadeMedida {
 	CX("Caixa");
 	
 	private final String description;
-
-	/**
-	 * @param description
-	 */
-	private UnidadeMedida(String description) {
-		this.description = description;
-	}
 	
 	
 }

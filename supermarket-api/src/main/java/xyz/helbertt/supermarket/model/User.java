@@ -35,5 +35,16 @@ public class User {
 	
 	@OneToMany(mappedBy = "userId")
 	private List<PurchaseList> purchaseLists;
+
+	/**
+	 * @param name
+	 * @param email
+	 * @param password
+	 */
+	public User(String name, String email, String password) {
+		this.name = name;
+		this.email = email;
+		this.password = password;
+	}
 	
 }

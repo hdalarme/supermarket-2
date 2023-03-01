@@ -1,7 +1,6 @@
 package xyz.helbertt.supermarket.controller;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,55 +17,34 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.AllArgsConstructor;
-import xyz.helbertt.supermarket.dto.UserDTO;
+import xyz.helbertt.supermarket.dto.request.UserDTO;
+import xyz.helbertt.supermarket.dto.response.MessageResponseDTO;
 import xyz.helbertt.supermarket.exception.SupermarketNotFoundException;
 import xyz.helbertt.supermarket.model.User;
 import xyz.helbertt.supermarket.service.UserService;
 
 @RestController
 @RequestMapping("api/v1/users")
-@AllArgsConstructor
+@AllArgsConstructor(onConstructor = @__(@Autowired))
 public class UserController {
 
-	@Autowired
-	private ModelMapper modelmapper;
+	private ModelMapper modelmapper;	
 	
-	@Autowired
 	private UserService service;
 	
 	@GetMapping
 	public List<UserDTO> getAll() {
-		return service.getAll().stream().map(user -> modelmapper.map(user, UserDTO.class))
-				.collect(Collectors.toList());
+		return service.getAll();
 	}
 	
 	@PostMapping
-	public ResponseEntity<UserDTO> create(@RequestBody UserDTO userDTO) {
-		
-		// convert DTO to Entity
-		//User userRequest = modelmapper.map(userDTO, User.class);
-		User userRequest = modelmapper.map(userDTO, User.class);
-		
-		User user = service.create(userRequest);
-		
-		// convert entity to DTO
-		UserDTO userResponse = modelmapper.map(user, UserDTO.class);
-		
-		return new ResponseEntity<UserDTO>(userResponse, HttpStatus.CREATED);
+	public MessageResponseDTO create(@RequestBody UserDTO userDTO) {
+		return  service.create(userDTO); 
 	}
 	
 	@PutMapping("/{id}")
-	public ResponseEntity<UserDTO> update(@PathVariable Long id, @RequestBody UserDTO userDTO) throws SupermarketNotFoundException {
-		
-		// convert DTO to Entity
-		User userRequest = modelmapper.map(userDTO, User.class);
-		
-		User user = service.update(id, userRequest);
-		
-		// convert entity to DTO
-		UserDTO userResponse = modelmapper.map(user, UserDTO.class);
-		
-		return ResponseEntity.ok().body(userResponse);
+	public MessageResponseDTO update(@PathVariable Long id, @RequestBody UserDTO userDTO) throws SupermarketNotFoundException {
+		return service.update(id, userDTO);
 	}
 	
 	@DeleteMapping("/{id}")

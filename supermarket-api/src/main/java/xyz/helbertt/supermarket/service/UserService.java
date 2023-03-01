@@ -2,16 +2,18 @@ package xyz.helbertt.supermarket.service;
 
 import java.util.List;
 
+import xyz.helbertt.supermarket.dto.request.UserDTO;
+import xyz.helbertt.supermarket.dto.response.MessageResponseDTO;
 import xyz.helbertt.supermarket.exception.SupermarketNotFoundException;
 import xyz.helbertt.supermarket.model.User;
 
 public interface UserService {
 
-	List<User> getAll();
+	List<UserDTO> getAll();
 	
-	User create(User user);
+	MessageResponseDTO create(UserDTO user);
 	
-	User update(Long id, User user) throws SupermarketNotFoundException;
+	MessageResponseDTO update(Long id, UserDTO user) throws SupermarketNotFoundException;
 	
 	void delete(Long id) throws SupermarketNotFoundException;
 	
