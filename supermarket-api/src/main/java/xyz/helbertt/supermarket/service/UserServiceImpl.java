@@ -1,6 +1,7 @@
 package xyz.helbertt.supermarket.service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
@@ -9,7 +10,9 @@ import org.springframework.stereotype.Service;
 
 import lombok.AllArgsConstructor;
 import xyz.helbertt.supermarket.dto.request.UserDTO;
+import xyz.helbertt.supermarket.dto.response.UserResponseDTO;
 import xyz.helbertt.supermarket.dto.response.MessageResponseDTO;
+import xyz.helbertt.supermarket.exception.SupermarketMailAlreadyRegisteredException;
 import xyz.helbertt.supermarket.exception.SupermarketNotFoundException;
 import xyz.helbertt.supermarket.model.User;
 import xyz.helbertt.supermarket.repository.UserRepository;
@@ -27,14 +30,21 @@ public class UserServiceImpl implements UserService {
 	}*/
 	
 	@Override
-	public List<UserDTO> getAll() {
+	public List<UserResponseDTO> getAll() {
 		//return repository.findAll();
-		return repository.findAll().stream().map(user -> modelmapper.map(user, UserDTO.class))
+		return repository.findAll().stream().map(user -> modelmapper.map(user, UserResponseDTO.class))
 				.collect(Collectors.toList());
+		
 	}
 
 	@Override
-	public MessageResponseDTO create(UserDTO user) {
+	public MessageResponseDTO create(UserDTO user) throws SupermarketMailAlreadyRegisteredException {
+		Optional<User> userFind = repository.findByEmail(user.getEmail());
+				
+		if (userFind.isPresent()) {
+			throw new SupermarketMailAlreadyRegisteredException("User", user.getEmail());
+		}
+		
 		User userToSave = user.transformToUser(); 
 		
 		User savedUser = repository.save(userToSave);
@@ -44,15 +54,15 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public MessageResponseDTO update(Long id, UserDTO userRequest) throws SupermarketNotFoundException {
+	public MessageResponseDTO update(Long id, UserDTO userRequest) throws SupermarketNotFoundException, SupermarketMailAlreadyRegisteredException {
 		User user = verifyIfExists(id);
 		
 		User userToUpdate = userRequest.transformToUser();
 		
 		userToUpdate.setId(id);
 		
-		if (user.getEmail().equals(userToUpdate.getEmail()) && user.getId() != userToUpdate.getId()) {			
-			return createMessageResponse(user.getId(), "A user with the informad email already exists in the system.");
+		if (user.getEmail().equals(userToUpdate.getEmail()) && user.getId() != id) {			
+			throw new SupermarketMailAlreadyRegisteredException("User", userToUpdate.getEmail());
 		}
 		
 		User updatedUser = repository.save(userToUpdate);
@@ -61,18 +71,22 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public void delete(Long id) throws SupermarketNotFoundException {
+	public MessageResponseDTO delete(Long id) throws SupermarketNotFoundException {
 		User user = verifyIfExists(id);
 		
 		repository.delete(user);
 		
+		return createMessageResponse(id, "Deleted user with ID ");
+		
 	}
 
 	@Override
-	public User getById(Long id) throws SupermarketNotFoundException {
+	public UserResponseDTO getById(Long id) throws SupermarketNotFoundException {
 		User user = verifyIfExists(id);
 		
-		return user;
+		UserResponseDTO userResponse  = UserResponseDTO.transformToDTO(user);
+		
+		return userResponse; 
 	}
 	
 	private User verifyIfExists(Long id) throws SupermarketNotFoundException {
