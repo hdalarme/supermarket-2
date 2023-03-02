@@ -13,5 +13,4 @@ public enum UnidadeMedida {
 	
 	private final String description;
 	
-	
 }

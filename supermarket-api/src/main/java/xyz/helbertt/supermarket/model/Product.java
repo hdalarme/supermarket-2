@@ -27,9 +27,12 @@ public class Product {
 	@Column(nullable = false, unique = true)
 	private String name;
 	
+	@Column
+	private String description;
+	
 	@Enumerated(EnumType.STRING)
 	@Column(nullable = false)
-	private UnidadeMedida type;
+	private UnidadeMedida unidade;
 	
 	@Column
 	private String peso;
@@ -37,8 +40,22 @@ public class Product {
 	@Column
 	private String codigoBarra;
 	
-	@Column(nullable = false)
+	@Column
 	private Long productParent;
+
+	/**
+	 * @param id
+	 * @param name
+	 * @param description
+	 * @param unidade
+	 */
+	public Product(String name, String description, UnidadeMedida unidade) {
+		this.name = name;
+		this.description = description;
+		this.unidade = unidade;
+	}
+	
+	
 	
 
 }
