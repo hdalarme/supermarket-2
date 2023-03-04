@@ -15,4 +15,8 @@ public class SupermarketNotFoundException extends Exception {
 		super(String.format(" %s with id %s not found in the system. ", model, id));
 	}
 	
+	public SupermarketNotFoundException(String model, String field, String codigoBarra) {
+		super(String.format(" %s with %s %s not found in the system. ", model, field, codigoBarra));
+	}
+	
 }

@@ -12,38 +12,49 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.AllArgsConstructor;
-import xyz.helbertt.supermarket.dto.request.UserDTO;
+import xyz.helbertt.supermarket.dto.request.ProductDTO;
 import xyz.helbertt.supermarket.dto.response.MessageResponseDTO;
-import xyz.helbertt.supermarket.dto.response.UserResponseDTO;
+import xyz.helbertt.supermarket.dto.response.ProductResponseDTO;
 import xyz.helbertt.supermarket.exception.SupermarketAlreadyRegisteredException;
 import xyz.helbertt.supermarket.exception.SupermarketNotFoundException;
-import xyz.helbertt.supermarket.service.UserService;
+import xyz.helbertt.supermarket.service.ProductService;
 
 @RestController
-@RequestMapping("api/v1/users")
+@RequestMapping("api/v1/products")
 @AllArgsConstructor(onConstructor = @__(@Autowired))
-public class UserController {
+public class ProductController {
 	
-	private UserService service;
+	private ProductService service;
 	
 	@GetMapping
-	public List<UserResponseDTO> getAll() {
-		return service.getAll();
+	public List<ProductResponseDTO> getAll(
+			@RequestParam(required = false) String name,
+			@RequestParam(required = false) String id
+		) {
+		if (name != null) {
+			return service.getByName(name);
+		} else if (id != null) {
+			Long idInfo = Long.parseLong(id);
+			return service.getByProductParent(idInfo);
+		} else {			
+			return service.getAll();
+		}
 	}
 	
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
-	public MessageResponseDTO create(@RequestBody UserDTO userDTO) throws SupermarketAlreadyRegisteredException {
-		return  service.create(userDTO); 
+	public MessageResponseDTO create(@RequestBody ProductDTO productDTO) throws SupermarketAlreadyRegisteredException {
+		return service.create(productDTO);
 	}
 	
 	@PutMapping("/{id}")
-	public MessageResponseDTO update(@PathVariable Long id, @RequestBody UserDTO userDTO) throws SupermarketNotFoundException, SupermarketAlreadyRegisteredException {
-		return service.update(id, userDTO);
+	public MessageResponseDTO update(@PathVariable Long id, @RequestBody ProductDTO productDTO) throws SupermarketNotFoundException, SupermarketAlreadyRegisteredException {
+		return service.update(id, productDTO);
 	}
 	
 	@DeleteMapping("/{id}")
@@ -53,14 +64,10 @@ public class UserController {
 	}
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<UserResponseDTO> getById(@PathVariable Long id) throws SupermarketNotFoundException {
+	public ResponseEntity<ProductResponseDTO> getById(@PathVariable Long id) throws SupermarketNotFoundException {
+		ProductResponseDTO product = service.getById(id);
 		
-		UserResponseDTO user = service.getById(id);
-		
-		// convert entity to DTO
-		//UserResponseDTO userResponse = modelmapper.map(user, UserResponseDTO.class);
-		
-		return ResponseEntity.ok().body(user);
+		return ResponseEntity.ok().body(product);
 	}
-	
+
 }

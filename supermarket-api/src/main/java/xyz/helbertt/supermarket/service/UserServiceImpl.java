@@ -12,7 +12,7 @@ import lombok.AllArgsConstructor;
 import xyz.helbertt.supermarket.dto.request.UserDTO;
 import xyz.helbertt.supermarket.dto.response.UserResponseDTO;
 import xyz.helbertt.supermarket.dto.response.MessageResponseDTO;
-import xyz.helbertt.supermarket.exception.SupermarketMailAlreadyRegisteredException;
+import xyz.helbertt.supermarket.exception.SupermarketAlreadyRegisteredException;
 import xyz.helbertt.supermarket.exception.SupermarketNotFoundException;
 import xyz.helbertt.supermarket.model.User;
 import xyz.helbertt.supermarket.repository.UserRepository;
@@ -38,11 +38,11 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public MessageResponseDTO create(UserDTO user) throws SupermarketMailAlreadyRegisteredException {
+	public MessageResponseDTO create(UserDTO user) throws SupermarketAlreadyRegisteredException {
 		Optional<User> userFind = repository.findByEmail(user.getEmail());
 				
 		if (userFind.isPresent()) {
-			throw new SupermarketMailAlreadyRegisteredException("User", user.getEmail());
+			throw new SupermarketAlreadyRegisteredException("User", user.getEmail());
 		}
 		
 		User userToSave = user.transformToUser(); 
@@ -54,7 +54,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public MessageResponseDTO update(Long id, UserDTO userRequest) throws SupermarketNotFoundException, SupermarketMailAlreadyRegisteredException {
+	public MessageResponseDTO update(Long id, UserDTO userRequest) throws SupermarketNotFoundException, SupermarketAlreadyRegisteredException {
 		User user = verifyIfExists(id);
 		
 		User userToUpdate = userRequest.transformToUser();
@@ -62,7 +62,7 @@ public class UserServiceImpl implements UserService {
 		userToUpdate.setId(id);
 		
 		if (user.getEmail().equals(userToUpdate.getEmail()) && user.getId() != id) {			
-			throw new SupermarketMailAlreadyRegisteredException("User", userToUpdate.getEmail());
+			throw new SupermarketAlreadyRegisteredException("User", userToUpdate.getEmail());
 		}
 		
 		User updatedUser = repository.save(userToUpdate);

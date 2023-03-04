@@ -15,6 +15,6 @@ public class ProductDTO {
 	private Long productParent;
 	
 	public Product transformToProduct() {
-		return new Product(name, description, unidade);
+		return new Product(name, description, unidade, productParent);
 	}
 }

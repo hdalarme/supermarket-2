@@ -55,6 +55,19 @@ public class Product {
 		this.unidade = unidade;
 	}
 	
+	/**
+	 * @param name
+	 * @param description
+	 * @param unidade
+	 * @param productParent
+	 */
+	public Product(String name, String description, UnidadeMedida unidade, Long productParent) {
+		this.name = name;
+		this.description = description;
+		this.unidade = unidade;
+		this.productParent = productParent;
+	}
+	
 	
 	
 
