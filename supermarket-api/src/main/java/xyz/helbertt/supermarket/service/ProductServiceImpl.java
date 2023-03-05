@@ -19,7 +19,7 @@ import xyz.helbertt.supermarket.repository.ProductRepository;
 
 @Service
 @AllArgsConstructor(onConstructor = @__(@Autowired))
-public class ProductImpl implements ProductService {
+public class ProductServiceImpl implements ProductService {
 
 	private ModelMapper productMapper;
 	
@@ -87,7 +87,7 @@ public class ProductImpl implements ProductService {
 		
 		Product updatedProduct = repository.save(productToUpdate);
 		
-		return createMessageResponse(updatedProduct.getId(), "Updated user with ID ");
+		return createMessageResponse(updatedProduct.getId(), "Updated product with ID ");
 	}
 
 	@Override
