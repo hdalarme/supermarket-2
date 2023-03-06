@@ -16,34 +16,34 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.AllArgsConstructor;
-import xyz.helbertt.supermarket.dto.request.PurchaseListDTO;
+import xyz.helbertt.supermarket.dto.request.PurchaseListItemDTO;
 import xyz.helbertt.supermarket.dto.response.MessageResponseDTO;
-import xyz.helbertt.supermarket.dto.response.PurchaseListResponseDTO;
+import xyz.helbertt.supermarket.dto.response.PurchaseListItemResponseDTO;
 import xyz.helbertt.supermarket.exception.SupermarketAlreadyRegisteredException;
 import xyz.helbertt.supermarket.exception.SupermarketNotFoundException;
-import xyz.helbertt.supermarket.service.PurchaseListService;
+import xyz.helbertt.supermarket.service.PurchaseListItemService;
 
 @RestController
-@RequestMapping("/api/v1/lists")
+@RequestMapping("/api/v1/listItems")
 @AllArgsConstructor (onConstructor = @__(@Autowired))
-public class PurchaseListController {
+public class PurchaseListItemController {
 	
-	private PurchaseListService service;
+	private PurchaseListItemService service;
 	
 	@GetMapping
-	public List<PurchaseListResponseDTO> listAll() {
+	public List<PurchaseListItemResponseDTO> listAll() {
 		return service.getAll();
 	}
 	
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
-	public MessageResponseDTO create(@RequestBody PurchaseListDTO purchaseListDTO) throws SupermarketAlreadyRegisteredException {
-		return service.create(purchaseListDTO);
+	public MessageResponseDTO create(@RequestBody PurchaseListItemDTO purchaseListItemDTO) throws SupermarketAlreadyRegisteredException {
+		return service.create(purchaseListItemDTO);
 	}
 	
 	@PutMapping("/{id}")
-	public MessageResponseDTO update(@PathVariable Long id, @RequestBody PurchaseListDTO purchaseListDTO) throws SupermarketNotFoundException, SupermarketAlreadyRegisteredException {
-		return service.update(id, purchaseListDTO);
+	public MessageResponseDTO update(@PathVariable Long id, @RequestBody PurchaseListItemDTO purchaseListItemDTO) throws SupermarketNotFoundException, SupermarketAlreadyRegisteredException {
+		return service.update(id, purchaseListItemDTO);
 	}
 	
 	@DeleteMapping("/{id}")
@@ -53,10 +53,10 @@ public class PurchaseListController {
 	}
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<PurchaseListResponseDTO> getById(@PathVariable Long id) throws SupermarketNotFoundException {
-		PurchaseListResponseDTO purchaseList = service.getById(id);
+	public ResponseEntity<PurchaseListItemResponseDTO> getById(@PathVariable Long id) throws SupermarketNotFoundException {
+		PurchaseListItemResponseDTO purchaseListItem = service.getById(id);
 		
-		return ResponseEntity.ok().body(purchaseList);
+		return ResponseEntity.ok().body(purchaseListItem);
 	}
 	
 }

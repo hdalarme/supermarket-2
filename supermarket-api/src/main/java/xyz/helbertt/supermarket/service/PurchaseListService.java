@@ -21,5 +21,4 @@ public interface PurchaseListService {
 	
 	PurchaseListResponseDTO getById(Long id) throws SupermarketNotFoundException;
 	
-	
 }
