@@ -1,7 +1,6 @@
 package xyz.helbertt.supermarket.model;
 
 import java.sql.Timestamp;
-import java.util.List;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -11,7 +10,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -21,22 +19,26 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "purchase_lists")
-public class PurchaseList {
-
+@Table(name = "purchase_list_items")
+public class PurchaseListItem {
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@Column(nullable = false) //, unique = true
-	private String name;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name="purchase_list_id")
+	private PurchaseList purchaseList;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="user_id")
-	private User user;
+	@JoinColumn(name="product_id")
+	private Product product;
 	
-	@OneToMany(mappedBy = "purchaseList")
-	private List<PurchaseListItem> purchaseListItem;
+	@Column
+	private Long amount;
+	
+	@Column
+	private boolean done;
 	
 	@Column
 	private Timestamp created_at;
@@ -45,12 +47,19 @@ public class PurchaseList {
 	private Timestamp updated_at;
 
 	/**
-	 * @param name
-	 * @param userId
+	 * @param id
+	 * @param purchaseList
+	 * @param product
+	 * @param amount
+	 * @param done
 	 */
-	public PurchaseList(String name, User user) {
-		super();
-		this.name = name;
-		this.user = user;
+	public PurchaseListItem(PurchaseList purchaseList, Product product, Long amount, boolean done) {
+		this.purchaseList = purchaseList;
+		this.product = product;
+		this.amount = amount;
+		this.done = done;
 	}
+
+	
+	
 }

@@ -19,7 +19,7 @@ public class PurchaseListResponseDTO {
 		return new PurchaseListResponseDTO(
 			purchaseList.getId(),
 			purchaseList.getName(),
-			purchaseList.getUserId()
+			purchaseList.getUser()
 		);
 	}
 }

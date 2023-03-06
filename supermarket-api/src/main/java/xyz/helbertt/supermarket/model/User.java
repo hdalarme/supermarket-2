@@ -34,8 +34,8 @@ public class User {
 	@Column(nullable = false)
 	private String password;
 	
-	@OneToMany(mappedBy = "userId")
-	private List<PurchaseList> purchaseLists;
+	@OneToMany(mappedBy = "user")
+	private List<PurchaseList> purchaseList;
 	
 	@Column
 	private Timestamp created_at;
