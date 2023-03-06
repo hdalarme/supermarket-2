@@ -1,5 +1,6 @@
 package xyz.helbertt.supermarket.model;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 import jakarta.persistence.Column;
@@ -35,6 +36,12 @@ public class User {
 	
 	@OneToMany(mappedBy = "userId")
 	private List<PurchaseList> purchaseLists;
+	
+	@Column
+	private Timestamp created_at;
+	
+	@Column
+	private Timestamp updated_at;
 
 	/**
 	 * @param name

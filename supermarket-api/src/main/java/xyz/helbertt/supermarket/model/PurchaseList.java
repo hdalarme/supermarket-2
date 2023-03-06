@@ -2,8 +2,6 @@ package xyz.helbertt.supermarket.model;
 
 import java.sql.Timestamp;
 
-import org.springframework.beans.factory.annotation.Value;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -16,8 +14,6 @@ import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import xyz.helbertt.supermarket.model.User;
 
 @Entity
 @Data
@@ -37,7 +33,19 @@ public class PurchaseList {
 	@JoinColumn(name="user_id")
 	private User userId;
 	
-	//private Timestamp created_at;
+	@Column
+	private Timestamp created_at;
 	
-	//private Timestamp updated_at;
+	@Column
+	private Timestamp updated_at;
+
+	/**
+	 * @param name
+	 * @param userId
+	 */
+	public PurchaseList(String name, User userId) {
+		super();
+		this.name = name;
+		this.userId = userId;
+	}
 }

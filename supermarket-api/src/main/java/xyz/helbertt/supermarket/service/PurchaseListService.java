@@ -2,20 +2,24 @@ package xyz.helbertt.supermarket.service;
 
 import java.util.List;
 
-import xyz.helbertt.supermarket.model.PurchaseList;
+import xyz.helbertt.supermarket.dto.request.PurchaseListDTO;
+import xyz.helbertt.supermarket.dto.response.MessageResponseDTO;
+import xyz.helbertt.supermarket.dto.response.PurchaseListResponseDTO;
+import xyz.helbertt.supermarket.exception.SupermarketAlreadyRegisteredException;
+import xyz.helbertt.supermarket.exception.SupermarketNotFoundException;
 
 
 public interface PurchaseListService {
 
-	List<PurchaseList> getAll();
+	List<PurchaseListResponseDTO> getAll();
 	
-	//PurchaseList create(PurchaseList list);
+	MessageResponseDTO create(PurchaseListDTO purchaseListDTO) throws SupermarketAlreadyRegisteredException;
 	
-	//PurchaseList update(Long id, PurchaseList list);
+	MessageResponseDTO update(Long id, PurchaseListDTO purchaseListDTO) throws SupermarketNotFoundException, SupermarketAlreadyRegisteredException;
 	
-	//void delete(Long id);
+	MessageResponseDTO delete(Long id) throws SupermarketNotFoundException;
 	
-	//PurchaseList getById(Long id);
+	PurchaseListResponseDTO getById(Long id) throws SupermarketNotFoundException;
 	
 	
 }

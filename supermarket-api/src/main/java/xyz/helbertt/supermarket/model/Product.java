@@ -1,5 +1,7 @@
 package xyz.helbertt.supermarket.model;
 
+import java.sql.Timestamp;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -42,6 +44,12 @@ public class Product {
 	
 	@Column
 	private Long productParent;
+	
+	@Column
+	private Timestamp created_at;
+	
+	@Column
+	private Timestamp updated_at;
 
 	/**
 	 * @param id
