@@ -1,6 +1,7 @@
 package xyz.helbertt.supermarket.model;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -10,6 +11,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -27,15 +29,18 @@ public class PurchaseListItem {
 	private Long id;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="purchase_list_id")
+	@JoinColumn(name="purchase_list_id", nullable = false)
 	private PurchaseList purchaseList;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="product_id")
+	@JoinColumn(name="product_id", nullable = false)
 	private Product product;
 	
 	@Column
 	private Long amount;
+	
+	@OneToMany(mappedBy = "item")
+	private List<Price> price;
 	
 	@Column
 	private boolean done;

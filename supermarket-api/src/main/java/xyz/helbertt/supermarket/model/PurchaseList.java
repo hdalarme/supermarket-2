@@ -32,7 +32,7 @@ public class PurchaseList {
 	private String name;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="user_id")
+	@JoinColumn(name="user_id", nullable = false)
 	private User user;
 	
 	@OneToMany(mappedBy = "purchaseList")
@@ -49,7 +49,6 @@ public class PurchaseList {
 	 * @param userId
 	 */
 	public PurchaseList(String name, User user) {
-		super();
 		this.name = name;
 		this.user = user;
 	}

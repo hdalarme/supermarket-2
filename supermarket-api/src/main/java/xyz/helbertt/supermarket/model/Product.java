@@ -47,8 +47,11 @@ public class Product {
 	@Column
 	private Long productParent;
 	
-	@OneToMany(mappedBy = "purchaseList")
+	@OneToMany(mappedBy = "product")
 	private List<PurchaseListItem> purchaseListItem;
+	
+	@OneToMany(mappedBy = "product")
+	private List<Price> price;
 	
 	@Column
 	private Timestamp created_at;

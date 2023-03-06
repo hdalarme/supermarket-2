@@ -1,12 +1,14 @@
 package xyz.helbertt.supermarket.model;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -40,6 +42,9 @@ public class Establishment {
 	
 	@Column
 	private String phone;
+	
+	@OneToMany(mappedBy = "establishment")
+	private List<Price> price;
 	
 	@Column
 	private Timestamp created_at;

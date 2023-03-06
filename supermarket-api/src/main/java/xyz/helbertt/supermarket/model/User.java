@@ -37,6 +37,9 @@ public class User {
 	@OneToMany(mappedBy = "user")
 	private List<PurchaseList> purchaseList;
 	
+	@OneToMany(mappedBy = "user")
+	private List<Price> price;
+	
 	@Column
 	private Timestamp created_at;
 	
