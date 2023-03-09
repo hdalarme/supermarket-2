@@ -39,6 +39,9 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  flutter_dotenv: ^5.0.2
+  dio: ^5.0.1
+  #dio: ^4.0.6
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
@@ -59,8 +62,9 @@ flutter:
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
-  # assets:
-  #   - images/a_dot_burr.jpeg
+  assets:
+    - assets/images/
+    - .env
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
@@ -74,8 +78,19 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
-  # fonts:
-  #   - family: Schyler
+  fonts:
+    - family: mplus1
+      fonts:
+        - asset: assets/mplus1/MPLUS1-Light.ttf
+          weight: 300
+        - asset: assets/mplus1/MPLUS1-Regular.ttf
+          style: normal
+        - asset: assets/mplus1/MPLUS1-Medium.ttf
+          weight: 500
+        - asset: assets/mplus1/MPLUS1-Bold.ttf
+          weight: 700
+        - asset: assets/mplus1/MPLUS1-ExtraBold.ttf
+          weight: 800
   #     fonts:
   #       - asset: fonts/Schyler-Regular.ttf
   #       - asset: fonts/Schyler-Italic.ttf
