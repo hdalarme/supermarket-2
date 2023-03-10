@@ -26,6 +26,9 @@ class TextStyles {
   TextStyle get textBold => 
     TextStyle(fontWeight: FontWeight.w700, fontFamily: font);
 
+    TextStyle get textExtraBold => 
+    TextStyle(fontWeight: FontWeight.w800, fontFamily: font);
+
   TextStyle get textButtonLabel => textBold.copyWith(fontSize: 14);
 }
 

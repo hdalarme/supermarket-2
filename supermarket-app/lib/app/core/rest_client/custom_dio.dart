@@ -1,4 +1,6 @@
+// ignore: depend_on_referenced_packages
 import 'package:dio/dio.dart';
+// ignore: depend_on_referenced_packages
 import 'package:dio/io.dart';
 
 import '../config/env/env.dart';

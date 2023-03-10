@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+// ignore: unused_import
 import 'package:supermarket/app/core/config/env/env.dart';
+import 'package:supermarket/app/core/ui/helpers/size_extensions.dart';
 import 'package:supermarket/app/core/ui/widgets/button.dart';
 
 
@@ -10,22 +12,44 @@ class SplashPage extends StatelessWidget {
    @override
    Widget build(BuildContext context) {
        return Scaffold(
-           appBar: AppBar(title: const Text('Splash'),),
-           body: Column(
-             children: [
-               Container(),
-               //ElevatedButton(onPressed: (){}, child: Text('Teste 001')),
-               Button(
-                width: 200,
-                height: 200,
-                label: Env.i['backend_base_url'] ?? '',//'Test Label 001',
-                onPressed: (){},
-               ),
-               TextFormField(
-                decoration: const InputDecoration(labelText: 'Text 001'),
-               )
-             ],
-           ),
+           body: ColoredBox(
+            color: const Color(0XFF140e0e),
+            child: Stack(
+              children: [
+                Align(
+                  alignment: Alignment.bottomCenter,
+                  child: SizedBox(
+                    width: context.screenWidth,
+                    child: Image.asset(
+                      'assets/images/lista.jpg',
+                      fit: BoxFit.cover,
+                      )
+                    ),
+                ),
+                Center(
+                  child: Column(
+                    children: [
+                      SizedBox(
+                        height: context.percentHeight(.15),
+                      ),
+                      Image.asset('assets/images/logo.png'),
+                      const SizedBox(
+                        height: 80,
+                      ),
+                      Button(
+                        width: context.percentWidth(.75),
+                        height: 40,
+                        label: 'Acessar', 
+                        onPressed: (){
+                          Navigator.of(context).popAndPushNamed('/home');
+                        }
+                      )
+                    ],
+                  ),
+                )
+              ],
+            ),
+            ),
        );
   }
 }
