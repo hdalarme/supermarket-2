@@ -9,10 +9,10 @@ public class PurchaseListDTO {
 
 	private Long id;
 	private String name;
-	private User userId;
+	private User user;
 	
 	public PurchaseList transformToPurchaseList() {
-		return new PurchaseList(name, userId);
+		return new PurchaseList(name, user);
 	}
 	
 }

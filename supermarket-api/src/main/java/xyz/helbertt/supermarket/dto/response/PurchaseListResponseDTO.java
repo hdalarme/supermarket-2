@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import xyz.helbertt.supermarket.model.PurchaseList;
-import xyz.helbertt.supermarket.model.User;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -13,13 +12,13 @@ public class PurchaseListResponseDTO {
 
 	private Long id;
 	private String name;
-	private User userId;
+	private Long user;
 	
 	public static PurchaseListResponseDTO transformToDTO(PurchaseList purchaseList) {
 		return new PurchaseListResponseDTO(
 			purchaseList.getId(),
 			purchaseList.getName(),
-			purchaseList.getUser()
+			purchaseList.getUserId()
 		);
 	}
 }

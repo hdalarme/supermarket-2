@@ -31,7 +31,7 @@ public class PriceController {
 	private PriceService service;
 	
 	@GetMapping
-	public List<PriceResponseDTO> listAll() {
+	public List<PriceResponseDTO> getAll() {
 		return service.getAll();
 	}
 	

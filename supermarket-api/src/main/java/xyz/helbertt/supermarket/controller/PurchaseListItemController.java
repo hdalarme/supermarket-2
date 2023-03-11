@@ -31,7 +31,7 @@ public class PurchaseListItemController {
 	private PurchaseListItemService service;
 	
 	@GetMapping
-	public List<PurchaseListItemResponseDTO> listAll() {
+	public List<PurchaseListItemResponseDTO> getAll() {
 		return service.getAll();
 	}
 	

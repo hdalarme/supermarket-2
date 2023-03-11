@@ -44,12 +44,28 @@ public class PurchaseList {
 	@Column
 	private Timestamp updated_at;
 
+	public Long getUserId() {
+		return this.user.getId();
+	}
+	
 	/**
 	 * @param name
-	 * @param userId
+	 * @param user
 	 */
 	public PurchaseList(String name, User user) {
 		this.name = name;
 		this.user = user;
 	}
+	
+	/**
+	 * @param name
+	 * @param userId 
+	 */
+	public PurchaseList(String name, Long userId) {
+		this.name = name;
+		this.user = user;
+	}
+
+
+
 }
