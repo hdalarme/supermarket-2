@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:supermarket/app/core/ui/helpers/loader.dart';
-import 'package:supermarket/app/core/ui/helpers/messages.dart';
+import 'package:supermarket/app/core/ui/base_state/base_state.dart';
 import 'package:supermarket/app/core/ui/style/colors_app.dart';
 import 'package:supermarket/app/pages/purchase_list/purchase_list_controller.dart';
 import 'package:supermarket/app/pages/purchase_list/purchase_list_state.dart';
 import 'package:supermarket/app/pages/purchase_list/widgets/purchasee_list_tile.dart';
 // ignore: depend_on_referenced_packages
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 
 import '../../core/ui/widgets/appbar.dart';
@@ -18,15 +18,23 @@ class PurchaseListPage extends StatefulWidget {
   State<PurchaseListPage> createState() => _PurchaseListPageState();
 }
 
-class _PurchaseListPageState extends State<PurchaseListPage>
-    with Loader, Messages {
+class _PurchaseListPageState extends BaseState<PurchaseListPage, PurchaseListController> {
   
   @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      context.read<PurchaseListController>().loadPurchaseLists();
-    });
+  void onReady() {
+    controller.loadPurchaseLists();
+  } 
+
+  Future<void> _goOrder(BuildContext context) async {
+    final navigator = Navigator.of(context);
+    final sp = await SharedPreferences.getInstance();
+    if(!sp.containsKey('accessToken')){
+      // envia para login
+      final loginResult = await navigator.pushNamed('/auth/login');
+    }
+
+    //continue
+    showSuccess('Sucesso ao criar conteudo');
   }
 
   @override
@@ -34,7 +42,7 @@ class _PurchaseListPageState extends State<PurchaseListPage>
     return Scaffold(
       appBar: Appbar(),
       floatingActionButton: FloatingActionButton(
-        onPressed: () async {
+        /*onPressed: () async {
           showLoader();
           await Future.delayed(const Duration(seconds: 2));
           hideLoader();
@@ -43,6 +51,9 @@ class _PurchaseListPageState extends State<PurchaseListPage>
           showInfo('Info ao criar conteudo');
           await Future.delayed(const Duration(seconds: 2));
           showSuccess('Sucesso ao criar conteudo');
+        },*/
+        onPressed: () {
+          _goOrder(context);
         },
         backgroundColor: context.colors.primary,
         child: const Icon(Icons.play_circle_outline_sharp),

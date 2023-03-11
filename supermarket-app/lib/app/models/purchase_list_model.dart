@@ -3,29 +3,28 @@
 import 'dart:convert' show json;
 import 'dart:convert';
 
-import 'package:supermarket/app/models/user_model.dart';
 
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 
 class PurchaseListModel {
   final int id;
   final String name;
-  final UserModel userId;
+  final int user;
   PurchaseListModel({
     required this.id,
     required this.name,
-    required this.userId,
+    required this.user,
   });
 
   PurchaseListModel copyWith({
     int? id,
     String? name,
-    UserModel? userId,
+    int? user,
   }) {
     return PurchaseListModel(
       id: id ?? this.id,
       name: name ?? this.name,
-      userId: userId ?? this.userId,
+      user: user ?? this.user,
     );
   }
 
@@ -33,7 +32,7 @@ class PurchaseListModel {
     return <String, dynamic>{
       'id': id,
       'name': name,
-      'userId': userId.toMap(),
+      'user': user,
     };
   }
 
@@ -41,7 +40,7 @@ class PurchaseListModel {
     return PurchaseListModel(
       id: map['id'] as int,
       name: map['name'] as String,
-      userId: UserModel.fromMap(map['userId'] as Map<String,dynamic>),
+      user: map['user'] as int,
     );
   }
 
@@ -50,7 +49,7 @@ class PurchaseListModel {
   factory PurchaseListModel.fromJson(String source) => PurchaseListModel.fromMap(json.decode(source) as Map<String, dynamic>);
 
   @override
-  String toString() => 'PurchaseListModel(id: $id, name: $name, userId: $userId)';
+  String toString() => 'PurchaseListModel(id: $id, name: $name, user: $user)';
 
   @override
   bool operator ==(covariant PurchaseListModel other) {
@@ -59,9 +58,9 @@ class PurchaseListModel {
     return 
       other.id == id &&
       other.name == name &&
-      other.userId == userId;
+      other.user == user;
   }
 
   @override
-  int get hashCode => id.hashCode ^ name.hashCode ^ userId.hashCode;
+  int get hashCode => id.hashCode ^ name.hashCode ^ user.hashCode;
 }
