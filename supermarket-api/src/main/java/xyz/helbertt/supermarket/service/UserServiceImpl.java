@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import lombok.AllArgsConstructor;
@@ -21,6 +22,8 @@ import xyz.helbertt.supermarket.repository.UserRepository;
 @AllArgsConstructor(onConstructor = @__(@Autowired))
 public class UserServiceImpl implements UserService {
 
+	private PasswordEncoder encoder;
+	
 	private ModelMapper modelmapper;
 	
 	private final UserRepository repository;
@@ -31,7 +34,6 @@ public class UserServiceImpl implements UserService {
 	
 	@Override
 	public List<UserResponseDTO> getAll() {
-		//return repository.findAll();
 		return repository.findAll().stream().map(user -> modelmapper.map(user, UserResponseDTO.class))
 				.collect(Collectors.toList());
 		
@@ -39,6 +41,9 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public MessageResponseDTO create(UserDTO user) throws SupermarketAlreadyRegisteredException {
+		
+		user.setPassword(encoder.encode(user.getPassword()));
+		
 		Optional<User> userFind = repository.findByEmail(user.getEmail());
 				
 		if (userFind.isPresent()) {
@@ -56,6 +61,8 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public MessageResponseDTO update(Long id, UserDTO userRequest) throws SupermarketNotFoundException, SupermarketAlreadyRegisteredException {
 		User user = verifyIfExists(id);
+		
+		userRequest.setPassword(encoder.encode(userRequest.getPassword()));
 		
 		User userToUpdate = userRequest.transformToUser();
 		
