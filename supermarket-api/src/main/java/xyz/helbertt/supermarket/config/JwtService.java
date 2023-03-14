@@ -1,4 +1,4 @@
-package xyz.helbertt.supermarket.service;
+package xyz.helbertt.supermarket.config;
 
 import java.security.Key;
 import java.util.Date;

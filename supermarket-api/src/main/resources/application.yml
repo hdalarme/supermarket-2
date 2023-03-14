@@ -8,7 +8,7 @@ spring:
   url: jdbc:h2:file:C:/Users/hdala/Documents/H2/supermarket
   driverClassName: org.h2.Driver
   username: sa
-  password: 
+  password:
  h2:
   console:
    enabled: true 

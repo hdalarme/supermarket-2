@@ -31,6 +31,11 @@ import org.springframework.security.core.userdetails.UserDetails;
 @Table(name = "users")
 public class User implements UserDetails {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -46,6 +51,9 @@ public class User implements UserDetails {
 	
 	@Enumerated(EnumType.STRING)
 	private Role role;
+	
+	@OneToMany(mappedBy = "user")
+	private List<Token> tokens;
 	
 	@OneToMany(mappedBy = "user")
 	private List<PurchaseList> purchaseList;
